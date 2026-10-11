@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Zoeten Inval">
+<meta name="theme-color" content="#25358C">
+<title>Zoeten Inval – telsysteem</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2325358C'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' font-family='Arial' font-weight='900' fill='%23F2AE3C'%3EZI%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2325358C'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' font-family='Arial' font-weight='900' fill='%23F2AE3C'%3EZI%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFBF8; --ink:#25358C; --ink-soft:#4A58A3; --rule:#E2574C;
+  --fris:#A9D8EE; --warm:#EE6B4D; --cocktail:#F2AE3C; --wijn:#E9A3B5; --honger:#82B95E;
+  --tile-ink:#1B275F; --panel:#FFFFFF; --line:#D9DBE8; --shadow:0 2px 0 #1B275F;
+  --bar:#25358C; --bar-ink:#FFFFFF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131833; --ink:#E8EBFA; --ink-soft:#AEB6DD; --rule:#E2574C;
+    --panel:#1C2244; --line:#2E3664; --bar:#0C1028; --bar-ink:#FFFFFF;
+    --shadow:0 2px 0 #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131833; --ink:#E8EBFA; --ink-soft:#AEB6DD; --rule:#E2574C;
+  --panel:#1C2244; --line:#2E3664; --bar:#0C1028; --bar-ink:#FFFFFF;
+  --shadow:0 2px 0 #000;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;min-height:100%;background:var(--paper);color:var(--ink);
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+.wrap{max-width:1200px;margin:0 auto;padding:16px 14px 120px;display:grid;gap:24px}
+@media (min-width:900px){
+  .wrap{grid-template-columns:1fr 340px;align-items:start;padding-bottom:40px}
+}
+header h1{
+  margin:0;font-stretch:125%;font-weight:900;font-size:clamp(1.6rem,6vw,2.4rem);
+  letter-spacing:.06em;color:var(--ink);line-height:1;
+}
+header p{margin:6px 0 0;color:var(--ink-soft);font-size:.95rem}
+section h2{
+  margin:22px 0 10px;font-stretch:125%;font-weight:800;font-size:1.15rem;letter-spacing:.08em;
+  padding-bottom:6px;border-bottom:2px solid var(--rule);
+}
+section h2 .sub{font-stretch:100%;font-weight:600;font-size:.9rem;letter-spacing:.02em;color:var(--rule)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.tile{
+  position:relative;border:2px solid var(--tile-ink);border-radius:6px;padding:10px 10px 9px;
+  min-height:84px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;
+  font:inherit;color:var(--tile-ink);cursor:pointer;box-shadow:var(--shadow);
+  transition:transform .06s;touch-action:manipulation;
+}
+.tile:active{transform:translateY(2px);box-shadow:none}
+.tile:focus-visible{outline:3px solid var(--rule);outline-offset:2px}
+.tile .n{font-weight:700;font-size:.95rem;line-height:1.15}
+.tile .p{font-weight:800;font-size:1.05rem;font-stretch:110%}
+.tile .badge{
+  position:absolute;top:-9px;right:-9px;min-width:26px;height:26px;padding:0 6px;border-radius:13px;
+  background:var(--tile-ink);color:#fff;font-weight:800;font-size:.85rem;display:none;
+  align-items:center;justify-content:center;border:2px solid var(--paper);
+}
+.tile.has .badge{display:flex}
+.tile.pop{animation:pop .18s}
+@keyframes pop{50%{transform:scale(.95)}}
+@media (prefers-reduced-motion:reduce){.tile.pop{animation:none}.tile{transition:none}}
+.c-fris{background:var(--fris)} .c-warm{background:var(--warm)} .c-cocktail{background:var(--cocktail)}
+.c-wijn{background:var(--wijn)} .c-honger{background:var(--honger)}
+.c-bord{background:#2F5D46;color:#FFFFFF} .c-bord .badge{background:#F2AE3C;color:#1B275F}
+.c-krijt{background:#2E2E33;color:#FFFFFF} .c-krijt .badge{background:#F2AE3C;color:#1B275F}
+.c-bier{background:#F7D45C} .c-nul{background:#C9E8B6} .c-bruin{background:#D9A877}
+
+/* zijpaneel (laptop) */
+aside{display:none}
+@media (min-width:900px){aside{display:block;position:sticky;top:calc(16px + env(safe-area-inset-top,0px))}}
+.panel{background:var(--panel);border:2px solid var(--ink);border-radius:8px;overflow:hidden}
+.panel h3{margin:0;padding:12px 14px;font-stretch:125%;font-weight:800;letter-spacing:.06em;border-bottom:2px solid var(--rule)}
+.list{list-style:none;margin:0;padding:0;max-height:55vh;overflow-y:auto}
+.list li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:9px 14px;border-bottom:1px solid var(--line)}
+.list .q{font-weight:800;margin-right:4px}
+.list .s{font-weight:700;font-variant-numeric:tabular-nums}
+.list button{
+  width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:transparent;color:var(--ink);
+  font:inherit;font-weight:900;font-size:1.1rem;cursor:pointer;line-height:1;
+}
+.empty{padding:18px 14px;color:var(--ink-soft)}
+.tot-tile{
+  display:flex;justify-content:space-between;align-items:center;width:100%;border:0;cursor:pointer;
+  background:var(--ink);color:var(--paper);font:inherit;padding:16px;font-weight:900;font-stretch:125%;
+  font-size:1.2rem;letter-spacing:.04em;
+}
+.tot-tile .v{font-size:1.5rem;font-variant-numeric:tabular-nums}
+.actions{display:flex;gap:8px;padding:10px 14px}
+.btn{
+  flex:1;padding:11px 10px;border-radius:6px;border:2px solid var(--ink);background:transparent;color:var(--ink);
+  font:inherit;font-weight:700;cursor:pointer;
+}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.solid{background:var(--rule);border-color:var(--rule);color:#fff}
+
+/* onderste balk (gsm) */
+.bar{
+  position:fixed;left:0;right:0;bottom:0;background:var(--bar);color:var(--bar-ink);
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;align-items:stretch;z-index:5;
+}
+@media (min-width:900px){.bar{display:none}}
+.bar .undo,.bar .klant{
+  border:2px solid rgba(255,255,255,.5);background:transparent;color:#fff;border-radius:6px;font:inherit;
+  font-weight:700;padding:0 10px;cursor:pointer;position:relative;
+}
+.bar .klant .cnt,.btn .cnt{
+  display:inline-flex;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--rule);color:#fff;
+  font-size:.75rem;font-weight:800;align-items:center;justify-content:center;margin-left:4px;
+}
+.bar .total{
+  flex:1;border:0;border-radius:6px;background:var(--rule);color:#fff;font:inherit;font-weight:900;
+  font-stretch:125%;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;cursor:pointer;font-size:1.05rem;
+}
+.bar .total .lbl{max-width:9em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+.bar .total .v{font-size:1.3rem;font-variant-numeric:tabular-nums}
+
+/* schuifvensters */
+.sheet{position:fixed;inset:0;background:rgba(10,14,40,.55);display:none;align-items:flex-end;justify-content:center;z-index:10}
+.sheet.open{display:flex}
+.sheet .panel{width:100%;max-width:520px;max-height:90%;display:flex;flex-direction:column;border-radius:12px 12px 0 0;
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (min-width:600px){.sheet{align-items:center}.sheet .panel{border-radius:12px}}
+.sheet .panel.tall{height:92%}
+@media (min-width:600px){.sheet .panel.tall{height:88vh}}
+.sheet .list{max-height:none;flex:1}
+.big{padding:18px 14px;display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--rule)}
+.big span:first-child{font-stretch:125%;font-weight:800;letter-spacing:.06em}
+.big .v{font-size:2.4rem;font-weight:900;font-variant-numeric:tabular-nums}
+.change{padding:0 14px 6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.change label{font-weight:600}
+.change input{width:110px;padding:9px;border-radius:6px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:inherit;font-size:1rem}
+.change .r{font-weight:800}
+.cust-strip{padding:8px 14px;background:var(--cocktail);color:#1B275F;font-weight:700;display:none}
+.cust-strip.on{display:block}
+.saverow{padding:4px 14px 10px;display:flex;gap:8px}
+.saverow input{flex:1;min-width:0;padding:11px;border-radius:6px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:inherit;font-size:1rem}
+.saverow .btn{flex:0 0 auto}
+.msg{padding:0 14px 8px;color:var(--rule);font-weight:700}
+.msg:empty{display:none}
+.note{padding:6px 14px 0;color:var(--ink-soft);font-size:.9rem}
+.tabs{list-style:none;margin:0;padding:0;overflow-y:auto;flex:1}
+.tabs li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.tabs .nm{font-weight:800;font-size:1.05rem}
+.tabs .meta{color:var(--ink-soft);font-size:.85rem}
+.tabs .sum{font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
+.tabs .row{grid-column:1 / -1;display:flex;gap:8px}
+.tabs .row .btn{padding:9px 10px}
+.tabs .busy{color:var(--rule);font-weight:700;font-size:.85rem}
+.btn.armed{background:var(--rule);border-color:var(--rule);color:#fff}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+  background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:6px;font-weight:700;z-index:20;display:none;max-width:90vw;text-align:center}
+.toast.on{display:block}
+.status{position:fixed;left:0;right:0;top:0;z-index:30;background:var(--rule);color:#fff;font-weight:700;text-align:center;padding:8px 12px calc(8px + env(safe-area-inset-top,0px));display:none}
+.status.on{display:block}
+
+/* beheer */
+.adm-link{display:inline-block;margin-top:8px;font-size:.85rem;color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:6px;padding:5px 10px;font:inherit;cursor:pointer}
+.adm{overflow-y:auto;flex:1;padding:4px 14px 10px}
+.adm-cat{border:2px solid var(--line);border-radius:8px;margin:10px 0;padding:8px}
+.adm-cathead{display:grid;grid-template-columns:1fr auto;gap:6px;margin-bottom:6px}
+.adm-cathead .sub{grid-column:1 / -1}
+.adm input{padding:9px;border-radius:6px;border:2px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:1rem;min-width:0;width:100%}
+.adm input.catname{font-weight:800;text-transform:uppercase}
+.adm-row{display:grid;grid-template-columns:1fr 84px 36px;gap:6px;margin:4px 0;align-items:center}
+.adm .x{width:36px;height:36px;border-radius:6px;border:2px solid var(--rule);background:transparent;color:var(--rule);font:inherit;font-weight:900;cursor:pointer}
+.adm .add{margin-top:6px;padding:8px 10px;border-radius:6px;border:2px dashed var(--ink-soft);background:transparent;color:var(--ink);font:inherit;font-weight:700;cursor:pointer;width:100%}
+.login{padding:14px;display:grid;gap:8px}
+.login input{padding:11px;border-radius:6px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:inherit;font-size:1rem}
+</style>
+</head>
+<body>
+<div class="status" id="status">Geen verbinding. Bestellingen worden bewaard zodra de verbinding terug is.</div>
+<div class="wrap">
+  <main>
+    <header>
+      <h1>ZOETEN INVAL</h1>
+      <p>Tik op een tegel om 1 stuk toe te voegen.</p>
+      <button class="adm-link" id="admOpen">Beheer kaart</button>
+    </header>
+    <div id="cats"></div>
+  </main>
+  <aside>
+    <div class="panel">
+      <h3>Optellijst</h3>
+      <div class="cust-strip" id="sideCust"></div>
+      <ul class="list" id="sideList"></ul>
+      <button class="tot-tile" id="sideTotal"><span>TOTAAL</span><span class="v">€ 0,00</span></button>
+      <div class="actions">
+        <button class="btn" id="sideUndo">Laatste ongedaan</button>
+        <button class="btn" id="sideTabs">Klanten <span class="cnt" id="sideCnt">0</span></button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div class="bar">
+  <button class="undo" id="barUndo" aria-label="Laatste ongedaan maken">↶</button>
+  <button class="klant" id="barTabs" aria-label="Open rekeningen">Klanten<span class="cnt" id="barCnt">0</span></button>
+  <button class="total" id="barTotal"><span class="lbl" id="barLbl">TOTAAL</span><span class="v">€ 0,00</span></button>
+</div>
+
+<!-- eindresultaat / afrekenen -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Eindresultaat">
+  <div class="panel">
+    <h3 id="sheetTitle">Eindresultaat</h3>
+    <ul class="list" id="sheetList"></ul>
+    <div class="big"><span>TOTAAL</span><span class="v" id="sheetTotal">€ 0,00</span></div>
+    <div class="change">
+      <label for="paid">Betaald €</label>
+      <input id="paid" inputmode="decimal" placeholder="bv. 50">
+      <span class="r" id="ret"></span>
+    </div>
+    <div class="saverow">
+      <input id="custName" list="custList" placeholder="Naam klant" autocomplete="off">
+      <datalist id="custList"></datalist>
+      <button class="btn" id="saveTab">Bewaar op klant</button>
+    </div>
+    <div class="msg" id="saveMsg"></div>
+    <div class="actions">
+      <button class="btn" id="sheetClose">Verder bestellen</button>
+      <button class="btn solid" id="sheetClear">Afgerekend</button>
+    </div>
+  </div>
+</div>
+
+<!-- open rekeningen (gedeeld) -->
+<div class="sheet" id="tabSheet" role="dialog" aria-modal="true" aria-label="Open rekeningen">
+  <div class="panel">
+    <h3>Open rekeningen</h3>
+    <div class="note">Gedeeld met alle toestellen van het café.</div>
+    <div class="msg" id="tabMsg"></div>
+    <ul class="tabs" id="tabList"></ul>
+    <div class="big"><span>TOTAAL OPEN</span><span class="v" id="tabTotal">€ 0,00</span></div>
+    <div class="note" id="dayTotal"></div>
+    <div class="actions">
+      <button class="btn" id="tabClose">Sluiten</button>
+    </div>
+  </div>
+</div>
+
+<!-- vrije prijs -->
+<div class="sheet" id="priceSheet" role="dialog" aria-modal="true" aria-label="Prijs ingeven">
+  <div class="panel">
+    <h3 id="priceTitle">Prijs ingeven</h3>
+    <div class="change" style="padding:14px">
+      <label for="freePrice">Prijs €</label>
+      <input id="freePrice" inputmode="decimal" placeholder="bv. 4,50" autocomplete="off">
+    </div>
+    <div class="msg" id="priceMsg"></div>
+    <div class="actions">
+      <button class="btn" id="priceCancel">Annuleren</button>
+      <button class="btn solid" id="priceOk">Toevoegen</button>
+    </div>
+  </div>
+</div>
+
+<!-- beheer: inloggen -->
+<div class="sheet" id="loginSheet" role="dialog" aria-modal="true" aria-label="Beheerder aanmelden">
+  <div class="panel">
+    <h3>Beheerder aanmelden</h3>
+    <div class="login">
+      <input id="loginMail" type="email" placeholder="E-mailadres" autocomplete="username">
+      <input id="loginPw" type="password" placeholder="Wachtwoord" autocomplete="current-password">
+    </div>
+    <div class="msg" id="loginMsg"></div>
+    <div class="actions">
+      <button class="btn" id="loginCancel">Annuleren</button>
+      <button class="btn solid" id="loginOk">Aanmelden</button>
+    </div>
+  </div>
+</div>
+
+<!-- beheer: kaart -->
+<div class="sheet" id="admSheet" role="dialog" aria-modal="true" aria-label="Beheer kaart">
+  <div class="panel tall">
+    <h3>Beheer kaart</h3>
+    <p class="note">Bewaren zet de kaart meteen op alle toestellen.</p>
+    <div class="msg" id="admMsg"></div>
+    <div class="adm" id="admBody"></div>
+    <div class="actions">
+      <button class="btn" id="admLogout">Afmelden</button>
+      <button class="btn" id="admCancel">Annuleren</button>
+      <button class="btn solid" id="admSave">Bewaren</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script>
+// ====== Firebase: de gedeelde database van het café ======
+// firebaseConfig = de "adresgegevens" van het Firebase-project (geen geheim; de toegang wordt door de regels in Firebase bewaakt)
+const firebaseConfig = {
+  apiKey: "AIzaSyB4ulf62FTwaqsGRMmFEcDxv-O3aN8-FPU",
+  authDomain: "zoeten-inval-telsysteem.firebaseapp.com",
+  databaseURL: "https://zoeten-inval-telsysteem-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "zoeten-inval-telsysteem",
+  storageBucket: "zoeten-inval-telsysteem.firebasestorage.app",
+  messagingSenderId: "103212103971",
+  appId: "1:103212103971:web:6f399ccc0221025659b496"
+};
+
+// BASE_MENU = de standaardkaart; wordt gebruikt zolang er in de database nog geen kaart bewaard is
+const BASE_MENU = [
+  {cat:"TAP", cls:"c-bier", items:[
+    ["Super 8 Pils 25cl",280],["Super 8 Pils 33cl",320],["Ne Zoete",380],["Blonde Stoot",380],["Seef",380]]},
+  {cat:"ALCOHOLVRIJ / ARM", cls:"c-nul", items:[
+    ["Vlotte Griet 0.3",450],["Energibajer 0.0",500],["Playground 0.4",500],["Sportzot 0.4",500],
+    ["Flandrien 0.0",450],["Super 8 Rouge 0.0",450],["Stella 0.0",280]]},
+  {cat:"FLES", sub:"licht(er) < 7%", cls:"c-bier", items:[
+    ["Stella",280],["Cadix",400],["Flandrien",450],["Tongerlo blond",450],["Vinnig Mieke (IPA)",500],
+    ["Hoegaarden",300],["Orval",500]]},
+  {cat:"FLES", sub:"stevig(er) > 7%", cls:"c-bier", items:[
+    ["Lucie",450],["Kloeke Diva",450],["Tongerlo tripel",500],["Westmalle tripel",450],["Tripel d'Anvers",450],
+    ["Cornet",450],["Duvel",450],["La Chouffe",450],["Oude Geuze Boon 25cl",400]]},
+  {cat:"FLES", sub:"bruin", cls:"c-bruin", items:[
+    ["Chimay blauw",500],["Westmalle dubbel",450],["Tongerlo bruin",450],["Stout Mokke",450]]},
+  {cat:"FLES", sub:"fruitig", cls:"c-wijn", items:[
+    ["Super 8 Rouge",450],["Kriek Mystic",380]]},
+  {cat:"FRIS", cls:"c-fris", items:[
+    ["Limonade gember",400],["Limonade citroen",400],["Limonade vlierbloesem",400],
+    ["Water plat",280],["Water bruis",280],["Coca-Cola",280],["Coca-Cola Zero",280],
+    ["Lipton ice tea",280],["Lipton green",280],["Bitter lemon",280],["Agrum",280],["Tonic",280],
+    ["Almdudler 35cl",450],["Gemberbier",400],["Drie Wilgen pompelmoes",300],["Drie Wilgen appel",300],
+    ["PomTon",550],["Cécémel",280]]},
+  {cat:"WARM", cls:"c-warm", items:[
+    ["Koffie",300],["Cappuccino",400],["Flat white",400],["Latte",400],["Warme choco",400],
+    ["Thee",280],["Verse gemberthee",400],["Verse muntthee",400]]},
+  {cat:"COCKTAILS & APERO", cls:"c-cocktail", items:[
+    ["Pastis",400],["Gin Tonic",800],["Gin Tonic 0.0",800],["PomGinTon",850],["Aperol Spritz",850],
+    ["Limoncello Spritz",850],["Kalmthout Mule 0.0",850],["Moscow Mule",1000],["Dark & Stormy",1100],
+    ["Antwerp Mule",1100],["Ne Zoeten Inval",1000],["Mojito",1000]]},
+  {cat:"WIJNEN", cls:"c-wijn", items:[
+    ["Wijn wit glas",450],["Wijn wit fles",2100],["Wijn rosé glas",450],["Wijn rosé fles",2100],
+    ["Wijn rood glas",450],["Wijn rood fles",2100],["Cava glas",550],["Cava fles",2500],
+    ["Porto rood",450],["Porto wit",450]]},
+  {cat:"HONGERKE?", cls:"c-honger", items:[
+    ["Loempia's",500],["Chickennuggets",500],["Ne croque",500],["Portie kaas",500],
+    ["Droge worst klein",500],["Droge worst groot",900]]},
+  {cat:"HET BORD", sub:"eens proberen", cls:"c-bord", items:[
+    ["Bootjesbier",500],["Bolder blond",500],["Bolder bruin",500],["Super 8 IPA",500],
+    ["Grimbergen Cuvée Floral",400],["Picon Bière",500],["Chouffe Cherry",450],["Dagartikel",null]]},
+  {cat:"HET BORD", sub:"alcoholvrij", cls:"c-bord", items:[
+    ["Safe Bier Nada 0.3",500],["Karmepiet 0.0",500],["Limo tijm-citroen",450],["Limo munt-limoen",450],
+    ["Mocktail Basil Breeze",700]]},
+  {cat:"BIER VAN DE KLANT", cls:"c-krijt", items:[
+    ["Den Binnenbocht GOD IPA 0.0",500]]}
+];
+
+// ====== hulpfuncties ======
+const fmt = c => "€ " + (c/100).toFixed(2).replace(".", ",");     // centen -> "€ 3,80"
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const COLORS = ["c-fris","c-warm","c-cocktail","c-wijn","c-honger","c-bier","c-nul","c-bruin","c-bord","c-krijt"];
+// Firebase bewaart geen null in een lijst; daarom wordt een vrije prijs (Dagartikel) als -1 bewaard en hier terug null gemaakt
+const cloneMenu = m => m.map(g => ({cat:g.cat, sub:g.sub || "", cls:g.cls || "c-fris",
+  items:(g.items || []).map(it => [it[0], (it[1] === null || it[1] === -1 || it[1] === undefined) ? null : it[1]])}));
+const menuForDb = m => m.map(g => ({cat:g.cat, sub:g.sub || "", cls:g.cls, items:g.items.map(([n,p]) => [n, p === null ? -1 : p])}));
+function validMenu(m){
+  return Array.isArray(m) && m.length > 0 && m.every(g => g && typeof g.cat === "string" && Array.isArray(g.items)
+    && g.items.every(it => Array.isArray(it) && typeof it[0] === "string" && (it[1] === null || it[1] === -1 || Number.isFinite(it[1]))));
+}
+let toastTimer;
+function toast(txt){ const el = $("toast"); el.textContent = txt; el.classList.add("on"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("on"), 2400); }
+// twice = eerst "Zeker?" tonen, pas bij de tweede tik uitvoeren
+function twice(btn, fn){
+  if (btn.dataset.armed){ fn(); return; }
+  const old = btn.textContent; btn.dataset.armed = "1"; btn.textContent = "Zeker?"; btn.classList.add("armed");
+  setTimeout(() => { delete btn.dataset.armed; btn.textContent = old; btn.classList.remove("armed"); }, 3000);
+}
+
+// ====== toestand ======
+let MENU = cloneMenu(BASE_MENU);   // de kaart die nu getoond wordt
+let price = {};                    // artikelnaam -> prijs in centen
+let order = [];                    // lopende bestelling op DIT toestel: lijst van artikelnamen in tikvolgorde
+let cust = null;                   // naam van de klant van wie de rekening nu open staat (null = losse bestelling)
+let custId = null;                 // sleutel van die rekening in de database
+let tabs = {};                     // gedeelde open rekeningen uit de database: id -> {name, items:[[naam,prijs],...], updated, bezig, bezigSinds}
+let dayTotal = 0;                  // vandaag afgerekend (alle toestellen samen)
+let isAdmin = false;               // ingelogd met e-mail + wachtwoord
+let deviceId = null;               // vaste code van dit toestel
+
+function buildPrices(){ price = {}; MENU.forEach(g => g.items.forEach(([n,p]) => { if (p !== null) price[n] = p; })); }
+try { deviceId = localStorage.getItem("zi-device"); if (!deviceId){ deviceId = Math.random().toString(36).slice(2,10); localStorage.setItem("zi-device", deviceId); } } catch(e){ deviceId = "x" + Date.now(); }
+
+// lokale bestelling bewaren/herladen (blijft op dit toestel, ook na sluiten van de app)
+function loadLocal(){
+  try { const kp = JSON.parse(localStorage.getItem("zi-prices") || "{}");
+    if (kp && typeof kp === "object") Object.entries(kp).forEach(([n,v]) => { if (!(n in price) && Number.isFinite(v)) price[n] = v; }); } catch(e){}
+  try { const s = JSON.parse(localStorage.getItem("zi-order") || "[]"); if (Array.isArray(s)) order = s.filter(n => n in price); } catch(e){}
+  try { cust = localStorage.getItem("zi-cust") || null; custId = localStorage.getItem("zi-custid") || null; } catch(e){}
+}
+function persistLocal(){
+  try {
+    localStorage.setItem("zi-order", JSON.stringify(order));
+    if (cust){ localStorage.setItem("zi-cust", cust); localStorage.setItem("zi-custid", custId || ""); }
+    else { localStorage.removeItem("zi-cust"); localStorage.removeItem("zi-custid"); }
+    const kp = {}; order.forEach(n => kp[n] = price[n]);
+    localStorage.setItem("zi-prices", JSON.stringify(kp));
+  } catch(e){}
+}
+buildPrices(); loadLocal();
+
+// ====== tegels ======
+let tiles = {};
+function buildTiles(){
+  tiles = {}; $("cats").innerHTML = "";
+  MENU.forEach(g => {
+    const sec = document.createElement("section");
+    sec.innerHTML = `<h2>${esc(g.cat)}${g.sub ? ` <span class="sub">${esc(g.sub)}</span>` : ""}</h2>`;
+    const grid = document.createElement("div"); grid.className = "grid";
+    g.items.forEach(([n,p]) => {
+      const b = document.createElement("button");
+      b.className = "tile " + g.cls;
+      b.innerHTML = `<span class="n">${esc(n)}</span><span class="p">${p === null ? "Prijs?" : fmt(p)}</span><span class="badge"></span>`;
+      if (p === null) b.dataset.free = "1";
+      b.addEventListener("click", () => {
+        if (p === null){ askPrice(n, b); return; }
+        order.push(n); b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); render();
+      });
+      grid.appendChild(b); tiles[n] = b;
+    });
+    sec.appendChild(grid); $("cats").appendChild(sec);
+  });
+}
+buildTiles();
+
+const groupedOf = items => { const m = new Map(); items.forEach(n => m.set(n,(m.get(n)||0)+1)); return [...m.entries()]; };
+const total = () => order.reduce((s,n) => s + (price[n] || 0), 0);
+const tabSum = t => (t.items || []).reduce((s,[n,p]) => s + p, 0);
+const timeOf = t => { const d = new Date(t); return String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0"); };
+
+function fillList(ul){
+  const g = groupedOf(order);
+  if (!g.length){ ul.innerHTML = `<li class="empty" style="display:block">Nog niets toegevoegd.</li>`; return; }
+  ul.innerHTML = "";
+  g.forEach(([n,q]) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span><span class="q">${q}×</span>${esc(n)}</span><span class="s">${fmt(q*price[n])}</span>`;
+    const minus = document.createElement("button");
+    minus.textContent = "−"; minus.setAttribute("aria-label", "1 " + n + " verwijderen");
+    minus.addEventListener("click", () => { const i = order.lastIndexOf(n); if (i>-1) order.splice(i,1); render(); });
+    li.appendChild(minus); ul.appendChild(li);
+  });
+}
+
+function fillTabs(){
+  const ul = $("tabList");
+  const list = Object.entries(tabs).map(([id,t]) => ({id, ...t})).sort((a,b) => a.name.localeCompare(b.name, "nl"));
+  if (!list.length){ ul.innerHTML = `<li class="empty" style="display:block">Geen open rekeningen. Bewaar een bestelling via Totaal → Bewaar op klant.</li>`; }
+  else {
+    ul.innerHTML = "";
+    list.forEach(t => {
+      const n = (t.items || []).length;
+      const busyElsewhere = t.bezig && t.bezig !== deviceId;
+      const stale = busyElsewhere && (Date.now() - (t.bezigSinds || 0) > 10*60*1000);   // >10 min: ander toestel is vermoedelijk vastgelopen
+      const li = document.createElement("li");
+      li.innerHTML = `<span><span class="nm">${esc(t.name)}</span><br><span class="meta">${n} stuks, laatst ${timeOf(t.updated || 0)}</span>
+          ${busyElsewhere ? `<br><span class="busy">${stale ? "Open gelaten op een ander toestel" : "Wordt afgerekend op een ander toestel"}</span>` : ""}</span>
+        <span class="sum">${fmt(tabSum(t))}</span>
+        <span class="row"><button class="btn solid open">${busyElsewhere ? (stale ? "Toch overnemen" : "Bezig…") : "Openen om af te rekenen"}</button><button class="btn del">Wissen</button></span>`;
+      const openBtn = li.querySelector(".open");
+      openBtn.disabled = busyElsewhere && !stale;
+      openBtn.onclick = () => openTab(t.id);
+      const del = li.querySelector(".del");
+      del.onclick = () => twice(del, () => { db.ref("cafe/rekeningen/" + t.id).remove(); toast("Rekening gewist"); });
+      ul.appendChild(li);
+    });
+  }
+  $("tabTotal").textContent = fmt(list.reduce((s,t) => s + tabSum(t), 0));
+  $("dayTotal").textContent = "Vandaag afgerekend (alle toestellen): " + fmt(dayTotal);
+  const cnt = list.length;
+  $("barCnt").textContent = cnt; $("sideCnt").textContent = cnt;
+  $("custList").innerHTML = list.map(x => `<option value="${esc(x.name)}">`).join("");
+}
+
+function render(){
+  const t = fmt(total());
+  document.querySelector("#sideTotal .v").textContent = t;
+  document.querySelector("#barTotal .v").textContent = t;
+  $("sheetTotal").textContent = t;
+  $("barLbl").textContent = cust ? cust : "TOTAAL";
+  $("sheetTitle").textContent = cust ? "Rekening " + cust : "Eindresultaat";
+  $("sideCust").textContent = cust ? "Rekening van " + cust : "";
+  $("sideCust").classList.toggle("on", !!cust);
+  fillList($("sideList")); fillList($("sheetList")); fillTabs();
+  const counts = Object.fromEntries(groupedOf(order));
+  Object.entries(tiles).forEach(([n,b]) => {
+    const q = b.dataset.free ? order.filter(x => x.startsWith(n + " € ")).length : (counts[n] || 0);
+    b.classList.toggle("has", q > 0);
+    b.querySelector(".badge").textContent = q;
+  });
+  calcChange(); persistLocal();
+}
+
+function calcChange(){
+  const v = parseFloat(($("paid").value || "").replace(",", "."));
+  const r = $("ret");
+  if (isNaN(v)) { r.textContent = ""; return; }
+  const diff = Math.round(v*100) - total();
+  r.textContent = diff >= 0 ? "Terug: " + fmt(diff) : "Tekort: " + fmt(-diff);
+}
+
+// ====== Firebase starten ======
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
+let ready = false;   // true zodra dit toestel aangemeld is (anoniem of als beheerder)
+
+auth.onAuthStateChanged(async user => {
+  if (!user){ try { await auth.signInAnonymously(); } catch(e){ $("status").textContent = "Aanmelden bij de database mislukt: " + (e.code || e.message); $("status").classList.add("on"); } return; }
+  isAdmin = !user.isAnonymous;
+  $("admOpen").textContent = isAdmin ? "Beheer kaart (aangemeld)" : "Beheer kaart";
+  if (!ready){ ready = true; startListening(); }
+});
+
+function startListening(){
+  // de kaart: zodra een beheerder ze bewaart, verschijnt ze overal
+  db.ref("cafe/kaart").on("value", snap => {
+    const m = snap.val();
+    MENU = cloneMenu(validMenu(m) ? m : BASE_MENU);
+    buildPrices(); loadLocal(); buildTiles(); render();
+  });
+  // de open rekeningen: live gedeeld
+  db.ref("cafe/rekeningen").on("value", snap => {
+    tabs = snap.val() || {};
+    // als de rekening die hier open staat ondertussen elders gewist/afgerekend is: naam loslaten, bestelling blijft
+    if (custId && !tabs[custId] && !order.length){ cust = null; custId = null; }
+    render();
+  });
+  // vandaag afgerekend (dagtotaal)
+  const start = new Date(); start.setHours(0,0,0,0);
+  db.ref("cafe/afgerekend").orderByChild("ts").startAt(start.getTime()).on("value", snap => {
+    dayTotal = 0; snap.forEach(c => { dayTotal += (c.val().total || 0); }); fillTabs();
+  });
+  // verbinding bewaken
+  db.ref(".info/connected").on("value", snap => { $("status").classList.toggle("on", snap.val() !== true); });
+}
+
+// ====== rekeningen (gedeeld) ======
+function saveTab(){
+  const name = $("custName").value.trim();
+  $("saveMsg").textContent = "";
+  if (!order.length){ $("saveMsg").textContent = "Er staat niets in de bestelling om te bewaren."; return; }
+  if (!name){ $("saveMsg").textContent = "Vul eerst een naam in."; $("custName").focus(); return; }
+  if (!ready){ $("saveMsg").textContent = "Nog geen verbinding met de database."; return; }
+  const newItems = order.map(n => [n, price[n]]);
+  // bestaat die naam al (en is het niet de rekening die hier open staat)? dan bijzetten
+  const existingId = custId && tabs[custId] ? custId : (Object.entries(tabs).find(([id,t]) => t.name.toLowerCase() === name.toLowerCase()) || [null])[0];
+  const ref = existingId ? db.ref("cafe/rekeningen/" + existingId) : db.ref("cafe/rekeningen").push();
+  ref.transaction(cur => {
+    const base = cur || {name, items:[]};
+    // als dit toestel de rekening open had, vervangen de huidige regels de oude (er kan iets weggehaald zijn); anders bijzetten
+    const items = (custId && existingId === custId) ? newItems : (base.items || []).concat(newItems);
+    return {name: base.name || name, items, updated: Date.now(), bezig: null, bezigSinds: null};
+  }).then(() => {
+    toast(existingId && existingId !== custId ? "Bijgezet op rekening " + tabs[existingId].name : "Bewaard op " + name);
+  }).catch(() => $("saveMsg").textContent = "Bewaren mislukt. Is er verbinding?");
+  order = []; cust = null; custId = null; $("paid").value = ""; $("custName").value = "";
+  $("sheet").classList.remove("open"); render();
+}
+
+function openTab(id){
+  $("tabMsg").textContent = "";
+  if (order.length){ $("tabMsg").textContent = "Er loopt nog een bestelling. Bewaar die eerst op een klant of reken ze af."; return; }
+  const ref = db.ref("cafe/rekeningen/" + id);
+  // "claimen": alleen als niemand anders ermee bezig is (of al meer dan 10 min)
+  ref.transaction(cur => {
+    if (!cur) return;   // ondertussen weg
+    if (cur.bezig && cur.bezig !== deviceId && Date.now() - (cur.bezigSinds || 0) < 10*60*1000) return;   // bezet: afbreken
+    return {...cur, bezig: deviceId, bezigSinds: Date.now()};
+  }).then(res => {
+    if (!res.committed || !res.snapshot.val()){ $("tabMsg").textContent = "Deze rekening is net op een ander toestel geopend of afgerekend."; return; }
+    const t = res.snapshot.val();
+    order = (t.items || []).map(([n,p]) => { price[n] = p; return n; });
+    cust = t.name; custId = id;
+    $("tabSheet").classList.remove("open");
+    render(); openSheet();
+  }).catch(() => $("tabMsg").textContent = "Openen mislukt. Is er verbinding?");
+}
+
+function settle(){
+  const had = cust, id = custId, items = order.map(n => [n, price[n]]), sum = total();
+  if (sum > 0 || items.length) db.ref("cafe/afgerekend").push({name: had || "", items, total: sum, ts: Date.now(), device: deviceId});
+  if (id) db.ref("cafe/rekeningen/" + id).remove();
+  order = []; cust = null; custId = null; $("paid").value = ""; $("sheet").classList.remove("open"); render();
+  toast(had ? "Rekening " + had + " afgerekend" : "Afgerekend");
+}
+
+// "Verder bestellen" bij een geopende rekening: rekening blijft hier open (naam blijft zichtbaar)
+function closeSheet(){ $("sheet").classList.remove("open"); }
+// een geopende rekening teruggeven zonder af te rekenen gebeurt via "Bewaar op klant" (de naam staat al ingevuld)
+
+function openSheet(){ $("saveMsg").textContent = ""; $("custName").value = cust || ""; $("sheet").classList.add("open"); render(); }
+function openTabs(){ $("tabMsg").textContent = ""; $("tabSheet").classList.add("open"); render(); }
+const undo = () => { order.pop(); render(); };
+
+// ====== vrije prijs (Dagartikel) ======
+let freeItem = null, freeTile = null;
+function askPrice(n, b){
+  freeItem = n; freeTile = b;
+  $("priceTitle").textContent = "Prijs " + n;
+  $("freePrice").value = ""; $("priceMsg").textContent = "";
+  $("priceSheet").classList.add("open");
+  setTimeout(() => $("freePrice").focus(), 50);
+}
+function addFreePrice(){
+  const v = parseFloat(($("freePrice").value || "").replace(",", "."));
+  if (!Number.isFinite(v) || v <= 0){ $("priceMsg").textContent = "Vul een geldige prijs in, bv. 4,50."; return; }
+  const c = Math.round(v*100);
+  const name = freeItem + " " + fmt(c);   // bv. "Dagartikel € 4,50"
+  price[name] = c; order.push(name);
+  $("priceSheet").classList.remove("open");
+  if (freeTile){ freeTile.classList.remove("pop"); void freeTile.offsetWidth; freeTile.classList.add("pop"); }
+  render();
+}
+
+// ====== beheer kaart ======
+let draft = null;
+const toCents = t => { const v = parseFloat(String(t).replace(",", ".")); return Number.isFinite(v) ? Math.round(v*100) : NaN; };
+const fromCents = c => Number.isFinite(c) ? (c/100).toFixed(2).replace(".", ",") : "";
+
+function admRender(){
+  const body = $("admBody"); body.innerHTML = "";
+  draft.forEach((g, gi) => {
+    const box = document.createElement("div"); box.className = "adm-cat";
+    box.innerHTML = `<div class="adm-cathead">
+        <input class="catname" value="${esc(g.cat)}" placeholder="Naam categorie">
+        <button class="x" title="Categorie verwijderen">✕</button>
+        <input class="sub" value="${esc(g.sub||"")}" placeholder="Ondertitel (mag leeg)">
+      </div>`;
+    box.querySelector(".catname").addEventListener("input", e => g.cat = e.target.value);
+    box.querySelector(".sub").addEventListener("input", e => g.sub = e.target.value);
+    const cx = box.querySelector(".adm-cathead .x");
+    cx.onclick = () => { const go = () => { draft.splice(gi,1); admRender(); }; g.items.length ? twice(cx, go) : go(); };
+    g.items.forEach((it, ii) => {
+      const row = document.createElement("div"); row.className = "adm-row";
+      row.innerHTML = `<input value="${esc(it[0])}" placeholder="Artikel"><input inputmode="decimal" value="${it[1] === null ? "" : fromCents(it[1])}" placeholder="vrij"><button class="x" title="Artikel verwijderen">−</button>`;
+      const [nm, pr, x] = row.querySelectorAll("input,button");
+      nm.addEventListener("input", e => it[0] = e.target.value);
+      pr.addEventListener("input", e => it[1] = e.target.value.trim() === "" ? null : toCents(e.target.value));   // leeg = vrije prijs
+      x.onclick = () => { g.items.splice(ii,1); admRender(); };
+      box.appendChild(row);
+    });
+    const add = document.createElement("button"); add.className = "add"; add.textContent = "+ Artikel toevoegen";
+    add.onclick = () => {
+      g.items.push(["", null]); admRender();
+      const inputs = body.querySelectorAll(".adm-cat")[gi].querySelectorAll(".adm-row input");
+      if (inputs.length) inputs[inputs.length-2].focus();
+    };
+    box.appendChild(add); body.appendChild(box);
+  });
+  const addCat = document.createElement("button"); addCat.className = "add"; addCat.textContent = "+ Categorie toevoegen";
+  addCat.onclick = () => { draft.push({cat:"", sub:"", cls:COLORS[draft.length % COLORS.length], items:[]}); admRender(); body.scrollTop = body.scrollHeight; };
+  body.appendChild(addCat);
+}
+
+function admSave(){
+  $("admMsg").textContent = "";
+  const seen = new Set();
+  for (const g of draft){
+    g.cat = g.cat.trim(); g.sub = (g.sub||"").trim();
+    if (!g.cat){ $("admMsg").textContent = "Elke categorie moet een naam hebben."; return; }
+    for (const it of g.items){
+      it[0] = it[0].trim();
+      if (!it[0]){ $("admMsg").textContent = `Een artikel in "${g.cat}" heeft geen naam.`; return; }
+      if (it[1] !== null && (!Number.isFinite(it[1]) || it[1] < 0)){ $("admMsg").textContent = `De prijs van "${it[0]}" is niet geldig.`; return; }
+      const k = it[0].toLowerCase();
+      if (seen.has(k)){ $("admMsg").textContent = `"${it[0]}" staat twee keer op de kaart. Geef het een andere naam.`; return; }
+      seen.add(k);
+    }
+  }
+  const btn = $("admSave"); btn.disabled = true; btn.textContent = "Bezig…";
+  db.ref("cafe/kaart").set(menuForDb(draft)).then(() => {
+    btn.disabled = false; btn.textContent = "Bewaren";
+    $("admSheet").classList.remove("open"); toast("Kaart bewaard voor alle toestellen");
+  }).catch(e => {
+    btn.disabled = false; btn.textContent = "Bewaren";
+    $("admMsg").textContent = e.code === "PERMISSION_DENIED" ? "Geen rechten: meld je aan als beheerder." : "Bewaren mislukt: " + (e.code || e.message);
+  });
+}
+
+async function doLogin(){
+  $("loginMsg").textContent = "";
+  const mail = $("loginMail").value.trim(), pw = $("loginPw").value;
+  if (!mail || !pw){ $("loginMsg").textContent = "Vul e-mailadres en wachtwoord in."; return; }
+  try {
+    await auth.signInWithEmailAndPassword(mail, pw);
+    $("loginPw").value = ""; $("loginSheet").classList.remove("open");
+    draft = cloneMenu(MENU); $("admMsg").textContent = ""; admRender(); $("admSheet").classList.add("open");
+  } catch(e){ $("loginMsg").textContent = "Aanmelden mislukt. Controleer e-mailadres en wachtwoord."; }
+}
+
+$("admOpen").onclick = () => {
+  if (isAdmin){ draft = cloneMenu(MENU); $("admMsg").textContent = ""; admRender(); $("admSheet").classList.add("open"); }
+  else { $("loginMsg").textContent = ""; $("loginSheet").classList.add("open"); setTimeout(() => $("loginMail").focus(), 50); }
+};
+$("admLogout").onclick = async () => { $("admSheet").classList.remove("open"); await auth.signOut(); toast("Afgemeld als beheerder"); };
+$("admCancel").onclick = () => $("admSheet").classList.remove("open");
+$("admSave").onclick = admSave;
+$("loginOk").onclick = doLogin;
+$("loginCancel").onclick = () => $("loginSheet").classList.remove("open");
+$("loginPw").addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
+
+// ====== knoppen ======
+$("barTotal").onclick = openSheet;
+$("sideTotal").onclick = openSheet;
+$("barTabs").onclick = openTabs;
+$("sideTabs").onclick = openTabs;
+$("barUndo").onclick = undo;
+$("sideUndo").onclick = undo;
+$("sheetClear").onclick = settle;
+$("sheetClose").onclick = closeSheet;
+$("saveTab").onclick = saveTab;
+$("custName").addEventListener("keydown", e => { if (e.key === "Enter") saveTab(); });
+$("tabClose").onclick = () => $("tabSheet").classList.remove("open");
+$("priceOk").onclick = addFreePrice;
+$("priceCancel").onclick = () => $("priceSheet").classList.remove("open");
+$("freePrice").addEventListener("keydown", e => { if (e.key === "Enter") addFreePrice(); });
+["sheet","tabSheet","priceSheet","loginSheet"].forEach(id => $(id).addEventListener("click", e => { if (e.target.id === id) $(id).classList.remove("open"); }));
+$("paid").addEventListener("input", calcChange);
+document.addEventListener("keydown", e => { if (e.key === "Escape") ["sheet","tabSheet","priceSheet","loginSheet"].forEach(id => $(id).classList.remove("open")); });
+
+render();
+</script>
+</body>
+</html>
