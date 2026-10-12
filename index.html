@@ -276,7 +276,7 @@ aside{display:none}
   <div class="panel">
     <h3>Beheerder aanmelden</h3>
     <div class="login">
-      <input id="loginMail" type="email" placeholder="E-mailadres" autocomplete="username">
+      <input id="loginMail" type="text" placeholder="Gebruikersnaam" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
       <input id="loginPw" type="password" placeholder="Wachtwoord" autocomplete="current-password">
     </div>
     <div class="msg" id="loginMsg"></div>
@@ -702,13 +702,15 @@ function admSave(){
 
 async function doLogin(){
   $("loginMsg").textContent = "";
-  const mail = $("loginMail").value.trim(), pw = $("loginPw").value;
-  if (!mail || !pw){ $("loginMsg").textContent = "Vul e-mailadres en wachtwoord in."; return; }
+  // naam = wat de beheerder intypt; zonder @ wordt er intern een vast achtervoegsel aan geplakt (er wordt nooit mail verstuurd)
+  const naam = $("loginMail").value.trim().toLowerCase(), pw = $("loginPw").value;
+  if (!naam || !pw){ $("loginMsg").textContent = "Vul gebruikersnaam en wachtwoord in."; return; }
+  const mail = naam.includes("@") ? naam : naam + "@zoeten-inval-telsysteem.firebaseapp.com";
   try {
     await auth.signInWithEmailAndPassword(mail, pw);
     $("loginPw").value = ""; $("loginSheet").classList.remove("open");
     draft = cloneMenu(MENU); $("admMsg").textContent = ""; admRender(); $("admSheet").classList.add("open");
-  } catch(e){ $("loginMsg").textContent = "Aanmelden mislukt. Controleer e-mailadres en wachtwoord."; }
+  } catch(e){ $("loginMsg").textContent = "Aanmelden mislukt. Controleer gebruikersnaam en wachtwoord."; }
 }
 
 $("admOpen").onclick = () => {
