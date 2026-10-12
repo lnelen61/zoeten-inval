@@ -56,17 +56,17 @@ section h2{
   padding-bottom:6px;border-bottom:2px solid var(--rule);
 }
 section h2 .sub{font-stretch:100%;font-weight:600;font-size:.9rem;letter-spacing:.02em;color:var(--rule)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:9px}
 .tile{
-  position:relative;border:2px solid var(--tile-ink);border-radius:6px;padding:10px 10px 9px;
-  min-height:84px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;
+  position:relative;border:2px solid var(--tile-ink);border-radius:6px;padding:5px 9px 5px;
+  min-height:44px;gap:0;overflow:visible;display:flex;flex-direction:column;justify-content:space-between;text-align:left;
   font:inherit;color:var(--tile-ink);cursor:pointer;box-shadow:var(--shadow);
   transition:transform .06s;touch-action:manipulation;
 }
 .tile:active{transform:translateY(2px);box-shadow:none}
 .tile:focus-visible{outline:3px solid var(--rule);outline-offset:2px}
-.tile .n{font-weight:700;font-size:.95rem;line-height:1.15}
-.tile .p{font-weight:800;font-size:1.05rem;font-stretch:110%}
+.tile .n{font-weight:700;font-size:.92rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.tile .p{font-weight:800;font-size:1rem;line-height:1.2;font-stretch:110%;white-space:nowrap}
 .tile .badge{
   position:absolute;top:-9px;right:-9px;min-width:26px;height:26px;padding:0 6px;border-radius:13px;
   background:var(--tile-ink);color:#fff;font-weight:800;font-size:.85rem;display:none;
@@ -183,6 +183,51 @@ aside{display:none}
 .adm .add{margin-top:6px;padding:8px 10px;border-radius:6px;border:2px dashed var(--ink-soft);background:transparent;color:var(--ink);font:inherit;font-weight:700;cursor:pointer;width:100%}
 .login{padding:14px;display:grid;gap:8px}
 .login input{padding:11px;border-radius:6px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:inherit;font-size:1rem}
+
+/* toog-knop en naam */
+.toogrow{padding:0 14px 10px;display:none}
+.toogrow.on{display:block}
+.toogrow .btn{width:100%;background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.toogrow .note{padding:4px 0 0}
+.naam-link{display:none;margin-left:6px}
+.naam-link.on{display:inline-block}
+.toggle{display:flex;align-items:center;gap:10px;padding:10px 14px;font-weight:700;border-bottom:1px solid var(--line)}
+.toggle input{width:22px;height:22px}
+.toggle small{font-weight:400;color:var(--ink-soft)}
+/* toogscherm (tablet) */
+.toog{display:none;max-width:1100px;margin:0 auto;padding:16px 14px 40px}
+body.is-toog .wrap, body.is-toog .bar{display:none}
+body.is-toog .toog{display:block}
+.toog h1{margin:0;font-stretch:125%;font-weight:900;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:.06em;line-height:1}
+.toog .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.toog .top .btn{flex:0 0 auto}
+.toog .uit{padding:14px;border:2px dashed var(--ink-soft);border-radius:8px;color:var(--ink-soft);font-weight:700;margin-bottom:14px;display:none}
+.toog .uit.on{display:block}
+.rij{display:flex;gap:14px;overflow-x:auto;align-items:flex-start;padding-bottom:14px;-webkit-overflow-scrolling:touch}
+.rij .card{flex:0 0 min(300px,78vw)}
+.scheid{flex:0 0 auto;align-self:stretch;display:flex;align-items:center;color:var(--ink-soft);font-weight:800;letter-spacing:.08em;writing-mode:vertical-rl;border-left:3px solid var(--line);padding-left:8px}
+.teller{font-stretch:125%;font-weight:800;color:var(--ink-soft)}
+body.is-toog{overflow-y:hidden}
+.toog{max-width:none}
+.card{background:var(--panel);border:2px solid var(--ink);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.card .hd{padding:12px 14px;border-bottom:2px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card .klant{font-stretch:125%;font-weight:900;font-size:1.3rem;letter-spacing:.03em}
+.card .meta{color:var(--ink-soft);font-size:.9rem;white-space:nowrap}
+.card ul{list-style:none;margin:0;padding:6px 0;flex:1}
+.card li{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 14px;font-size:1.15rem}
+.card li .q{font-weight:900;margin-right:6px}
+.card li button{width:34px;height:34px;border-radius:50%;border:2px solid var(--ink);background:transparent;color:var(--ink);font:inherit;font-weight:900;font-size:1.1rem;cursor:pointer}
+.card .ft{padding:10px 14px 14px}
+.card .ft .btn{width:100%;padding:16px;font-size:1.15rem;font-stretch:125%}
+.card.oud{border-color:var(--rule)}
+.card.oud .hd .meta{color:var(--rule);font-weight:800}
+.card.done{opacity:.55;border-color:var(--line)}
+.card.done .hd{border-bottom-color:var(--line)}
+.card.done li button{display:none}
+.toog h2{margin:26px 0 10px;font-stretch:125%;font-weight:800;font-size:1.1rem;letter-spacing:.08em;padding-bottom:6px;border-bottom:2px solid var(--line);color:var(--ink-soft)}
+.toog .leeg{padding:30px 14px;text-align:center;color:var(--ink-soft);font-size:1.2rem}
+.voet{margin-top:26px;padding-top:12px;border-top:2px solid var(--line);display:flex;gap:10px;flex-wrap:wrap}
+.voet .adm-link{margin:0}
 </style>
 </head>
 <body>
@@ -191,10 +236,9 @@ aside{display:none}
   <main>
     <header>
       <h1>ZOETEN INVAL</h1>
-      <p>Tik op een tegel om 1 stuk toe te voegen.</p>
-      <button class="adm-link" id="admOpen">Beheer kaart</button>
     </header>
     <div id="cats"></div>
+    <footer class="voet"><button class="adm-link" id="admOpen">Beheer kaart</button><button class="adm-link naam-link" id="naamOpen">Jij: ?</button></footer>
   </main>
   <aside>
     <div class="panel">
@@ -233,6 +277,10 @@ aside{display:none}
       <button class="btn" id="saveTab">Bewaar op klant</button>
     </div>
     <div class="msg" id="saveMsg"></div>
+    <div class="toogrow" id="toogRow">
+      <button class="btn" id="sendToog">Stuur naar toog</button>
+      <div class="note">Gaat naar de tablet aan de toog en komt ook op de rekening van de klant.</div>
+    </div>
     <div class="actions">
       <button class="btn" id="sheetClose">Verder bestellen</button>
       <button class="btn solid" id="sheetClear">Afgerekend</button>
@@ -271,6 +319,22 @@ aside{display:none}
   </div>
 </div>
 
+<!-- naam van de medewerker (voor het toogscherm) -->
+<div class="sheet" id="naamSheet" role="dialog" aria-modal="true" aria-label="Jouw naam">
+  <div class="panel">
+    <h3>Wie ben jij?</h3>
+    <p class="note">Je naam komt bij elke bestelling die je naar de toog stuurt. Dit toestel onthoudt ze.</p>
+    <div class="login">
+      <input id="naamInput" type="text" placeholder="Je voornaam" autocomplete="off">
+    </div>
+    <div class="msg" id="naamMsg"></div>
+    <div class="actions">
+      <button class="btn" id="naamCancel">Annuleren</button>
+      <button class="btn solid" id="naamOk">Bewaren</button>
+    </div>
+  </div>
+</div>
+
 <!-- beheer: inloggen -->
 <div class="sheet" id="loginSheet" role="dialog" aria-modal="true" aria-label="Beheerder aanmelden">
   <div class="panel">
@@ -292,6 +356,7 @@ aside{display:none}
   <div class="panel tall">
     <h3>Beheer kaart</h3>
     <p class="note">Bewaren zet de kaart meteen op alle toestellen.</p>
+    <label class="toggle"><input type="checkbox" id="admToog"> <span>Toogscherm aan <br><small>Geeft het personeel de knop "Stuur naar toog". Tablet: open dit adres met <b>?toog</b> erachter.</small></span></label>
     <div class="msg" id="admMsg"></div>
     <div class="adm" id="admBody"></div>
     <div class="actions">
@@ -300,6 +365,17 @@ aside{display:none}
       <button class="btn solid" id="admSave">Bewaren</button>
     </div>
   </div>
+</div>
+
+<!-- toogscherm (tablet achter de toog): zelfde adres met ?toog erachter -->
+<div class="toog" id="toog">
+  <div class="top">
+    <h1>TOOG</h1><span class="teller" id="toogTeller"></span>
+    <button class="btn" id="toogSound">Geluid aan</button>
+  </div>
+  <div class="uit" id="toogUit">Het toogscherm staat uit. Een beheerder zet het aan in Beheer kaart. Openstaande bestellingen blijven hieronder zichtbaar.</div>
+  <div class="leeg" id="toogLeeg">Geen open bestellingen.</div>
+  <div class="rij" id="toogRij"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -399,6 +475,12 @@ let tabs = {};                     // gedeelde open rekeningen uit de database: 
 let dayTotal = 0;                  // vandaag afgerekend (alle toestellen samen)
 let isAdmin = false;               // ingelogd met e-mail + wachtwoord
 let deviceId = null;               // vaste code van dit toestel
+const IS_TOOG = new URLSearchParams(location.search).has("toog");   // dit toestel is de tablet achter de toog
+let toogOn = false;                // schakelaar uit de database: mag het personeel naar de toog sturen?
+let naam = "";                     // voornaam van de medewerker op DIT toestel (voor bestellingen naar de toog)
+let bestellingen = {};             // (alleen toogscherm) bestellingen van vandaag: id -> {door, klant, items, ts, status, geleverdTs, rekeningId}
+let baseItems = [];                // bij een geopende rekening: de regels die er al op stonden (om alleen het nieuwe naar de toog te sturen)
+try { naam = localStorage.getItem("zi-naam") || ""; } catch(e){}
 
 function buildPrices(){ price = {}; MENU.forEach(g => g.items.forEach(([n,p]) => { if (p !== null) price[n] = p; })); }
 try { deviceId = localStorage.getItem("zi-device"); if (!deviceId){ deviceId = Math.random().toString(36).slice(2,10); localStorage.setItem("zi-device", deviceId); } } catch(e){ deviceId = "x" + Date.now(); }
@@ -432,7 +514,7 @@ function buildTiles(){
     g.items.forEach(([n,p]) => {
       const b = document.createElement("button");
       b.className = "tile " + g.cls;
-      b.innerHTML = `<span class="n">${esc(n)}</span><span class="p">${p === null ? "Prijs?" : fmt(p)}</span><span class="badge"></span>`;
+      b.title = n; b.innerHTML = `<span class="n">${esc(n)}</span><span class="p">${p === null ? "Prijs?" : fmt(p)}</span><span class="badge"></span>`;
       if (p === null) b.dataset.free = "1";
       b.addEventListener("click", () => {
         if (p === null){ askPrice(n, b); return; }
@@ -444,6 +526,17 @@ function buildTiles(){
   });
 }
 buildTiles();
+// lange namen: lettertje stapsgewijs kleiner tot de naam op één lijn past (minimum 0,62 rem)
+function fitNames(){
+  document.querySelectorAll(".tile .n").forEach(n => {
+    n.style.fontSize = "";
+    let f = 0.92;
+    while (n.scrollWidth > n.clientWidth + 1 && f > 0.62){ f -= 0.04; n.style.fontSize = f + "rem"; }
+  });
+}
+fitNames();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+window.addEventListener("resize", fitNames);
 
 const groupedOf = items => { const m = new Map(); items.forEach(n => m.set(n,(m.get(n)||0)+1)); return [...m.entries()]; };
 const total = () => order.reduce((s,n) => s + (price[n] || 0), 0);
@@ -511,6 +604,9 @@ function render(){
     b.querySelector(".badge").textContent = q;
   });
   calcChange(); persistLocal();
+  $("toogRow").classList.toggle("on", toogOn && !IS_TOOG);
+  $("naamOpen").classList.toggle("on", toogOn && !IS_TOOG);
+  $("naamOpen").textContent = "Jij: " + (naam || "?");
 }
 
 function calcChange(){
@@ -544,12 +640,25 @@ function startListening(){
   const start = new Date(); start.setHours(0,0,0,0);
   const afgRef = db.ref("cafe/afgerekend").orderByChild("ts").startAt(start.getTime());
   const conRef = db.ref(".info/connected");
-  liveRefs = [kaartRef, rekRef, afgRef, conRef];
+  const instRef = db.ref("cafe/instellingen/toogscherm");
+  const bestRef = db.ref("cafe/bestellingen").orderByChild("ts").startAt(start.getTime());
+  liveRefs = [kaartRef, rekRef, afgRef, conRef, instRef];
+  if (IS_TOOG) liveRefs.push(bestRef);
+  // de schakelaar van het toogscherm
+  instRef.on("value", snap => { toogOn = snap.val() === true; render(); if (IS_TOOG) renderToog(); });
+  // (alleen de tablet) de bestellingen van vandaag, live
+  if (IS_TOOG) bestRef.on("value", snap => {
+    const prev = Object.values(bestellingen).filter(b => b.status === "open").length;
+    bestellingen = snap.val() || {};
+    const now = Object.values(bestellingen).filter(b => b.status === "open").length;
+    if (toogSeen && now > prev) beep();
+    toogSeen = true; renderToog();
+  });
   // de kaart: zodra een beheerder ze bewaart, verschijnt ze overal
   kaartRef.on("value", snap => {
     const m = snap.val();
     MENU = cloneMenu(validMenu(m) ? m : BASE_MENU);
-    buildPrices(); loadLocal(); buildTiles(); render();
+    buildPrices(); loadLocal(); buildTiles(); fitNames(); render();
   });
   // de open rekeningen: live gedeeld
   rekRef.on("value", snap => {
@@ -567,7 +676,8 @@ function startListening(){
 }
 
 // ====== rekeningen (gedeeld) ======
-function saveTab(){
+function saveTab(toogItems){
+  // toogItems = (optioneel) de regels die tegelijk naar de toog gaan; daarna wordt de rekening gewoon bewaard zoals anders
   const name = $("custName").value.trim();
   $("saveMsg").textContent = "";
   if (!order.length){ $("saveMsg").textContent = "Er staat niets in de bestelling om te bewaren."; return; }
@@ -583,9 +693,12 @@ function saveTab(){
     const items = (custId && existingId === custId) ? newItems : (base.items || []).concat(newItems);
     return {name: base.name || name, items, updated: Date.now(), bezig: null, bezigSinds: null};
   }).then(() => {
-    toast(existingId && existingId !== custId ? "Bijgezet op rekening " + tabs[existingId].name : "Bewaard op " + name);
+    if (toogItems && toogItems.length){
+      db.ref("cafe/bestellingen").push({door: naam, klant: name, items: toogItems, ts: Date.now(), status: "open", rekeningId: ref.key, device: deviceId});
+      toast("Naar de toog gestuurd en bewaard op " + name);
+    } else toast(existingId && existingId !== custId ? "Bijgezet op rekening " + tabs[existingId].name : "Bewaard op " + name);
   }).catch(() => $("saveMsg").textContent = "Bewaren mislukt. Is er verbinding?");
-  order = []; cust = null; custId = null; $("paid").value = ""; $("custName").value = "";
+  order = []; cust = null; custId = null; baseItems = []; $("paid").value = ""; $("custName").value = "";
   $("sheet").classList.remove("open"); render();
 }
 
@@ -602,6 +715,7 @@ function openTab(id){
     if (!res.committed || !res.snapshot.val()){ $("tabMsg").textContent = "Deze rekening is net op een ander toestel geopend of afgerekend."; return; }
     const t = res.snapshot.val();
     order = (t.items || []).map(([n,p]) => { price[n] = p; return n; });
+    baseItems = order.slice();
     cust = t.name; custId = id;
     $("tabSheet").classList.remove("open");
     render(); openSheet();
@@ -612,7 +726,7 @@ function settle(){
   const had = cust, id = custId, items = order.map(n => [n, price[n]]), sum = total();
   if (sum > 0 || items.length) db.ref("cafe/afgerekend").push({name: had || "", items, total: sum, ts: Date.now(), device: deviceId});
   if (id) db.ref("cafe/rekeningen/" + id).remove();
-  order = []; cust = null; custId = null; $("paid").value = ""; $("sheet").classList.remove("open"); render();
+  order = []; cust = null; custId = null; baseItems = []; $("paid").value = ""; $("sheet").classList.remove("open"); render();
   toast(had ? "Rekening " + had + " afgerekend" : "Afgerekend");
 }
 
@@ -642,6 +756,107 @@ function addFreePrice(){
   $("priceSheet").classList.remove("open");
   if (freeTile){ freeTile.classList.remove("pop"); void freeTile.offsetWidth; freeTile.classList.add("pop"); }
   render();
+}
+
+// ====== naar de toog sturen ======
+// nieuwe regels = wat er in de bestelling zit en nog niet op de geopende rekening stond
+function newItems(){
+  const left = baseItems.slice();
+  return order.filter(n => { const i = left.indexOf(n); if (i > -1){ left.splice(i,1); return false; } return true; }).map(n => [n, price[n]]);
+}
+function sendToog(){
+  $("saveMsg").textContent = "";
+  if (!order.length){ $("saveMsg").textContent = "Er staat niets in de bestelling."; return; }
+  const items = newItems();
+  if (!items.length){ $("saveMsg").textContent = "Alles op deze rekening is al naar de toog gestuurd."; return; }
+  if (!$("custName").value.trim()){ $("saveMsg").textContent = "Vul de naam van de klant in."; $("custName").focus(); return; }
+  if (!naam){ askNaam(() => sendToog()); return; }
+  saveTab(items);
+}
+let naamNext = null;
+function askNaam(next){ naamNext = next || null; $("naamInput").value = naam; $("naamMsg").textContent = ""; $("naamSheet").classList.add("open"); setTimeout(() => $("naamInput").focus(), 50); }
+function saveNaam(){
+  const v = $("naamInput").value.trim();
+  if (!v){ $("naamMsg").textContent = "Vul je voornaam in."; return; }
+  naam = v; try { localStorage.setItem("zi-naam", naam); } catch(e){}
+  $("naamSheet").classList.remove("open"); render();
+  const n = naamNext; naamNext = null; if (n) n();
+}
+$("sendToog").onclick = sendToog;
+$("naamOpen").onclick = () => askNaam();
+$("naamOk").onclick = saveNaam;
+$("naamCancel").onclick = () => { naamNext = null; $("naamSheet").classList.remove("open"); };
+$("naamInput").addEventListener("keydown", e => { if (e.key === "Enter") saveNaam(); });
+
+// ====== toogscherm (tablet) ======
+let toogSeen = false;        // eerste lading bestellingen binnen? (daarna pas piepen bij nieuwe)
+let audioCtx = null;         // geluid mag pas na een tik van de gebruiker
+function beep(){
+  if (!audioCtx) return;
+  try {
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.frequency.value = 880; g.gain.value = 0.25; o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + 0.35);
+    setTimeout(() => { const o2 = audioCtx.createOscillator(); o2.frequency.value = 1175; o2.connect(g); o2.start(); o2.stop(audioCtx.currentTime + 0.35); }, 450);
+  } catch(e){}
+}
+const minsAgo = t => Math.max(0, Math.round((Date.now() - t) / 60000));
+function toogCard(id, b, done){
+  const card = document.createElement("div"); card.className = "card" + (done ? " done" : (minsAgo(b.ts) >= 10 ? " oud" : ""));
+  const meta = done ? "geleverd " + timeOf(b.geleverdTs || b.ts) : (minsAgo(b.ts) + " min");
+  card.innerHTML = `<div class="hd"><span class="klant">${esc(b.klant || "—")}</span><span class="meta">${esc(b.door || "?")} · ${timeOf(b.ts)} · ${meta}</span></div><ul></ul><div class="ft"></div>`;
+  const ul = card.querySelector("ul");
+  groupedOf((b.items || []).map(it => it[0])).forEach(([n,q]) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span><span class="q">${q}×</span>${esc(n)}</span>`;
+    const minus = document.createElement("button"); minus.textContent = "−"; minus.title = "1 " + n + " schrappen (ook van de rekening)";
+    minus.onclick = () => twice(minus, () => removeFromBestelling(id, b, n));
+    li.appendChild(minus); ul.appendChild(li);
+  });
+  if (!done){
+    const btn = document.createElement("button"); btn.className = "btn solid"; btn.textContent = "Geleverd";
+    btn.onclick = () => db.ref("cafe/bestellingen/" + id).update({status: "geleverd", geleverdTs: Date.now()});
+    card.querySelector(".ft").appendChild(btn);
+  } else card.querySelector(".ft").remove();
+  return card;
+}
+// een regel schrappen op de toog: uit de bestelling, en ook één keer van de klantrekening (als die nog open staat)
+function removeFromBestelling(id, b, n){
+  const items = (b.items || []).slice(); const i = items.findIndex(it => it[0] === n);
+  if (i < 0) return;
+  const removed = items[i]; items.splice(i,1);
+  if (items.length) db.ref("cafe/bestellingen/" + id).update({items}); else db.ref("cafe/bestellingen/" + id).remove();
+  if (b.rekeningId) db.ref("cafe/rekeningen/" + b.rekeningId).transaction(cur => {
+    if (!cur) return cur;
+    const its = (cur.items || []).slice(); const j = its.findIndex(it => it[0] === removed[0] && it[1] === removed[1]);
+    if (j > -1) its.splice(j,1);
+    return {...cur, items: its, updated: Date.now()};
+  });
+  toast(n + " geschrapt");
+}
+function renderToog(){
+  if (!IS_TOOG) return;
+  $("toogUit").classList.toggle("on", !toogOn);
+  const all = Object.entries(bestellingen);
+  const open = all.filter(([,b]) => b.status === "open").sort((a,b) => a[1].ts - b[1].ts);
+  const done = all.filter(([,b]) => b.status === "geleverd").sort((a,b) => (b[1].geleverdTs||0) - (a[1].geleverdTs||0));
+  // één rij: oudste open bestelling links, nieuwere daarnaast, geleverde (grijs) uiterst rechts
+  const r = $("toogRij"), keep = r.scrollLeft; r.innerHTML = "";
+  open.forEach(([id,b]) => r.appendChild(toogCard(id, b, false)));
+  if (done.length){ const sc = document.createElement("div"); sc.className = "scheid"; sc.textContent = "GELEVERD"; r.appendChild(sc); }
+  done.slice().reverse().forEach(([id,b]) => r.appendChild(toogCard(id, b, true)));
+  r.scrollLeft = keep;
+  $("toogTeller").textContent = open.length ? open.length + " open" : "";
+  $("toogLeeg").style.display = open.length ? "none" : "block";
+  document.title = (open.length ? "(" + open.length + ") " : "") + "Toog – Zoeten Inval";
+}
+if (IS_TOOG){
+  document.body.classList.add("is-toog");
+  $("toogSound").onclick = () => {
+    if (!audioCtx){ try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} }
+    if (audioCtx){ audioCtx.resume(); $("toogSound").textContent = "Geluid staat aan"; beep(); }
+  };
+  setInterval(renderToog, 60000);   // de "x min"-aanduiding elke minuut verversen
 }
 
 // ====== beheer kaart ======
@@ -717,12 +932,18 @@ async function doLogin(){
   const mail = naam.includes("@") ? naam : naam + "@zoeten-inval-telsysteem.firebaseapp.com";
   try {
     await auth.signInWithEmailAndPassword(mail, pw);
-    $("loginPw").value = ""; $("loginSheet").classList.remove("open");
+    $("loginPw").value = ""; $("loginSheet").classList.remove("open"); $("admToog").checked = toogOn;
     draft = cloneMenu(MENU); $("admMsg").textContent = ""; admRender(); $("admSheet").classList.add("open");
   } catch(e){ $("loginMsg").textContent = "Aanmelden mislukt. Controleer gebruikersnaam en wachtwoord."; }
 }
 
+$("admToog").onchange = e => {
+  const on = e.target.checked;
+  db.ref("cafe/instellingen/toogscherm").set(on).then(() => toast(on ? "Toogscherm aan: personeel ziet nu 'Stuur naar toog'" : "Toogscherm uit"))
+    .catch(() => { e.target.checked = !on; $("admMsg").textContent = "Geen rechten om het toogscherm te schakelen."; });
+};
 $("admOpen").onclick = () => {
+  $("admToog").checked = toogOn;
   if (isAdmin){ draft = cloneMenu(MENU); $("admMsg").textContent = ""; admRender(); $("admSheet").classList.add("open"); }
   else { $("loginMsg").textContent = ""; $("loginSheet").classList.add("open"); setTimeout(() => $("loginMail").focus(), 50); }
 };
@@ -748,9 +969,9 @@ $("tabClose").onclick = () => $("tabSheet").classList.remove("open");
 $("priceOk").onclick = addFreePrice;
 $("priceCancel").onclick = () => $("priceSheet").classList.remove("open");
 $("freePrice").addEventListener("keydown", e => { if (e.key === "Enter") addFreePrice(); });
-["sheet","tabSheet","priceSheet","loginSheet"].forEach(id => $(id).addEventListener("click", e => { if (e.target.id === id) $(id).classList.remove("open"); }));
+["sheet","tabSheet","priceSheet","loginSheet","naamSheet"].forEach(id => $(id).addEventListener("click", e => { if (e.target.id === id) $(id).classList.remove("open"); }));
 $("paid").addEventListener("input", calcChange);
-document.addEventListener("keydown", e => { if (e.key === "Escape") ["sheet","tabSheet","priceSheet","loginSheet"].forEach(id => $(id).classList.remove("open")); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") ["sheet","tabSheet","priceSheet","loginSheet","naamSheet"].forEach(id => $(id).classList.remove("open")); });
 
 render();
 </script>
