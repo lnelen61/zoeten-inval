@@ -531,30 +531,39 @@ auth.onAuthStateChanged(async user => {
   if (!user){ try { await auth.signInAnonymously(); } catch(e){ $("status").textContent = "Aanmelden bij de database mislukt: " + (e.code || e.message); $("status").classList.add("on"); } return; }
   isAdmin = !user.isAnonymous;
   $("admOpen").textContent = isAdmin ? "Beheer kaart (aangemeld)" : "Beheer kaart";
-  if (!ready){ ready = true; startListening(); }
+  // bij ELKE aanmelding (ook na afmelden als beheerder) de live verbindingen opnieuw openen:
+  // tijdens het afmelden is het toestel even niet aangemeld, en dan sluit Firebase de live verbindingen
+  ready = true; startListening();
 });
 
+// liveRefs = de live verbindingen die nu open staan, zodat ze bij een nieuwe aanmelding eerst gesloten worden
+let liveRefs = [];
 function startListening(){
+  liveRefs.forEach(r => r.off()); liveRefs = [];
+  const kaartRef = db.ref("cafe/kaart"), rekRef = db.ref("cafe/rekeningen");
+  const start = new Date(); start.setHours(0,0,0,0);
+  const afgRef = db.ref("cafe/afgerekend").orderByChild("ts").startAt(start.getTime());
+  const conRef = db.ref(".info/connected");
+  liveRefs = [kaartRef, rekRef, afgRef, conRef];
   // de kaart: zodra een beheerder ze bewaart, verschijnt ze overal
-  db.ref("cafe/kaart").on("value", snap => {
+  kaartRef.on("value", snap => {
     const m = snap.val();
     MENU = cloneMenu(validMenu(m) ? m : BASE_MENU);
     buildPrices(); loadLocal(); buildTiles(); render();
   });
   // de open rekeningen: live gedeeld
-  db.ref("cafe/rekeningen").on("value", snap => {
+  rekRef.on("value", snap => {
     tabs = snap.val() || {};
     // als de rekening die hier open staat ondertussen elders gewist/afgerekend is: naam loslaten, bestelling blijft
     if (custId && !tabs[custId] && !order.length){ cust = null; custId = null; }
     render();
   });
   // vandaag afgerekend (dagtotaal)
-  const start = new Date(); start.setHours(0,0,0,0);
-  db.ref("cafe/afgerekend").orderByChild("ts").startAt(start.getTime()).on("value", snap => {
+  afgRef.on("value", snap => {
     dayTotal = 0; snap.forEach(c => { dayTotal += (c.val().total || 0); }); fillTabs();
   });
   // verbinding bewaken
-  db.ref(".info/connected").on("value", snap => { $("status").classList.toggle("on", snap.val() !== true); });
+  conRef.on("value", snap => { $("status").classList.toggle("on", snap.val() !== true); });
 }
 
 // ====== rekeningen (gedeeld) ======
