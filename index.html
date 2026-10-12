@@ -295,8 +295,6 @@ body.is-toog{overflow-y:hidden}
     <div class="note">Gedeeld met alle toestellen van het café.</div>
     <div class="msg" id="tabMsg"></div>
     <ul class="tabs" id="tabList"></ul>
-    <div class="big"><span>TOTAAL OPEN</span><span class="v" id="tabTotal">€ 0,00</span></div>
-    <div class="note" id="dayTotal"></div>
     <div class="actions">
       <button class="btn" id="tabClose">Sluiten</button>
     </div>
@@ -472,7 +470,6 @@ let order = [];                    // lopende bestelling op DIT toestel: lijst v
 let cust = null;                   // naam van de klant van wie de rekening nu open staat (null = losse bestelling)
 let custId = null;                 // sleutel van die rekening in de database
 let tabs = {};                     // gedeelde open rekeningen uit de database: id -> {name, items:[[naam,prijs],...], updated, bezig, bezigSinds}
-let dayTotal = 0;                  // vandaag afgerekend (alle toestellen samen)
 let isAdmin = false;               // ingelogd met e-mail + wachtwoord
 let deviceId = null;               // vaste code van dit toestel
 const IS_TOOG = new URLSearchParams(location.search).has("toog");   // dit toestel is de tablet achter de toog
@@ -580,8 +577,6 @@ function fillTabs(){
       ul.appendChild(li);
     });
   }
-  $("tabTotal").textContent = fmt(list.reduce((s,t) => s + tabSum(t), 0));
-  $("dayTotal").textContent = "Vandaag afgerekend (alle toestellen): " + fmt(dayTotal);
   const cnt = list.length;
   $("barCnt").textContent = cnt; $("sideCnt").textContent = cnt;
   $("custList").innerHTML = list.map(x => `<option value="${esc(x.name)}">`).join("");
@@ -638,11 +633,10 @@ function startListening(){
   liveRefs.forEach(r => r.off()); liveRefs = [];
   const kaartRef = db.ref("cafe/kaart"), rekRef = db.ref("cafe/rekeningen");
   const start = new Date(); start.setHours(0,0,0,0);
-  const afgRef = db.ref("cafe/afgerekend").orderByChild("ts").startAt(start.getTime());
   const conRef = db.ref(".info/connected");
   const instRef = db.ref("cafe/instellingen/toogscherm");
-  const bestRef = db.ref("cafe/bestellingen").orderByChild("ts").startAt(start.getTime());
-  liveRefs = [kaartRef, rekRef, afgRef, conRef, instRef];
+  const bestRef = db.ref("cafe/bestellingen");
+  liveRefs = [kaartRef, rekRef, conRef, instRef];
   if (IS_TOOG) liveRefs.push(bestRef);
   // de schakelaar van het toogscherm
   instRef.on("value", snap => { toogOn = snap.val() === true; render(); if (IS_TOOG) renderToog(); });
@@ -653,6 +647,9 @@ function startListening(){
     const now = Object.values(bestellingen).filter(b => b.status === "open").length;
     if (toogSeen && now > prev) beep();
     toogSeen = true; renderToog();
+    // opruimen: geleverde bestellingen ouder dan 3 dagen verdwijnen uit de database (open bestellingen nooit)
+    const oud = Date.now() - 3*24*3600*1000;
+    Object.entries(bestellingen).forEach(([id,b]) => { if (b.status === "geleverd" && (b.geleverdTs || b.ts) < oud) db.ref("cafe/bestellingen/" + id).remove(); });
   });
   // de kaart: zodra een beheerder ze bewaart, verschijnt ze overal
   kaartRef.on("value", snap => {
@@ -666,10 +663,6 @@ function startListening(){
     // als de rekening die hier open staat ondertussen elders gewist/afgerekend is: naam loslaten, bestelling blijft
     if (custId && !tabs[custId] && !order.length){ cust = null; custId = null; }
     render();
-  });
-  // vandaag afgerekend (dagtotaal)
-  afgRef.on("value", snap => {
-    dayTotal = 0; snap.forEach(c => { dayTotal += (c.val().total || 0); }); fillTabs();
   });
   // verbinding bewaken
   conRef.on("value", snap => { $("status").classList.toggle("on", snap.val() !== true); });
@@ -844,7 +837,7 @@ function renderToog(){
   const r = $("toogRij"), keep = r.scrollLeft; r.innerHTML = "";
   open.forEach(([id,b]) => r.appendChild(toogCard(id, b, false)));
   if (done.length){ const sc = document.createElement("div"); sc.className = "scheid"; sc.textContent = "GELEVERD"; r.appendChild(sc); }
-  done.slice().reverse().forEach(([id,b]) => r.appendChild(toogCard(id, b, true)));
+  done.forEach(([id,b]) => r.appendChild(toogCard(id, b, true)));   // recentst geleverd eerst, naast de open kaarten
   r.scrollLeft = keep;
   $("toogTeller").textContent = open.length ? open.length + " open" : "";
   $("toogLeeg").style.display = open.length ? "none" : "block";
