@@ -191,7 +191,7 @@ aside{display:none}
 .toogrow .note{padding:4px 0 0}
 .naam-link{display:none;margin-left:6px}
 .naam-link.on{display:inline-block}
-.toggle{display:flex;align-items:center;gap:10px;padding:10px 14px;font-weight:700;border-bottom:1px solid var(--line)}
+.toggle{display:flex;align-items:center;gap:10px;padding:12px 14px;margin-top:10px;font-weight:700;border-top:2px solid var(--line)}
 .toggle input{width:22px;height:22px}
 .toggle small{font-weight:400;color:var(--ink-soft)}
 /* toogscherm (tablet) */
@@ -354,9 +354,9 @@ body.is-toog{overflow-y:hidden}
   <div class="panel tall">
     <h3>Beheer kaart</h3>
     <p class="note">Bewaren zet de kaart meteen op alle toestellen.</p>
-    <label class="toggle"><input type="checkbox" id="admToog"> <span>Toogscherm aan <br><small>Geeft het personeel de knop "Stuur naar toog". Tablet: open dit adres met <b>?toog</b> erachter.</small></span></label>
     <div class="msg" id="admMsg"></div>
     <div class="adm" id="admBody"></div>
+    <label class="toggle"><input type="checkbox" id="admToog"> <span>Toogscherm aan <br><small>Geeft het personeel de knop "Stuur naar toog". Tablet: open dit adres met <b>?toog</b> erachter.</small></span></label>
     <div class="actions">
       <button class="btn" id="admLogout">Afmelden</button>
       <button class="btn" id="admCancel">Annuleren</button>
