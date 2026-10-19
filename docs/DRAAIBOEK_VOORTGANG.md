@@ -34,8 +34,20 @@ Dit document is het geheugen van het project. Nieuwste informatie onderaan (over
 
 - Zoon als tweede beheerder (twee stappen, zie `ARCHITECTUUR.md`).
 - Eigenaarschap Firebase (Google-account) en GitHub-account overdragen of een gedeeld café-account kiezen (stappen staan in het overdrachtsdocument van Leo; nooit de repo naar een ander account verhuizen).
-- Back-ups buiten GitHub: kopie van `index.html` en JSON-export van de database.
+- Back-ups buiten GitHub: eerste kopie gemaakt op 19 okt 2026 (zie hieronder). Herhalen na elke kaartwijziging of maandelijks.
 - `spraaktest.html` uit de repo halen als ze er nog in staat.
+
+## Reservekopieën
+
+Inhoud per kopie: `index.html` (de app) + JSON-export van de database (Firebase-console → Build → Realtime Database → Data → ⋮ → Export JSON). De export bevat klantnamen en de beheerders-UID: **nooit** in de repo buiten `lokaal\`.
+
+Plaatsen: `lokaal\backup\<datum>\` op de laptop (gitignored) en `C:\Users\leone\OneDrive\ZoetenInval\Backups\<datum>\` (buiten de laptop).
+
+Terugzetten: kaart/instellingen via Firebase-console → Data → ⋮ → Import JSON (overschrijft alles op die plaats, dus eerst een verse export maken); de app via `git revert` of door `index.html` te vervangen en te publiceren.
+
+| Datum | Versie app | Inhoud database | Opmerking |
+|---|---|---|---|
+| 19 okt 2026 | v1.0 | `cafe/afgerekend`, `beheerders`, `instellingen`, `kaart` (geen open rekeningen of bestellingen op dat moment) | Eerste kopie |
 
 ## Testlog
 

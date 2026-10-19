@@ -13,7 +13,7 @@ Regel: **vóór** elke wijziging aan de laptop hier noteren wat er verandert en 
 | 5 | Python-omgeving voor de tests | `C:\Projecten\ZoetenInval-werk\.venv` | Map `.venv` verwijderen |
 | 6 | Testbrowser van Playwright (±200 MB) | `%LOCALAPPDATA%\ms-playwright` | Map `ms-playwright` verwijderen |
 | 7 | Inloggegevens voor GitHub in Git Credential Manager (bij de eerste `git push`) | Windows-referentiebeheer (Credential Manager) | Configuratiescherm → Referentiebeheer → Windows-referenties → `git:https://github.com` verwijderen |
-| 8 | Kopie van het pakket in OneDrive | `C:\Users\leone\OneDrive\ZoetenIval` | Bestand verwijderen |
+| 8 | Kopie van het pakket in OneDrive | `C:\Users\leone\OneDrive\ZoetenInval` (tot 19 okt 2026 `ZoetenIval`) | Bestand verwijderen |
 | 9 | Tijdelijke Playwright-kopie door `npx playwright install` (19 oktober 2026, per ongeluk gestart) | `%LOCALAPPDATA%\npm-cache\_npx` | Map `_npx` verwijderen, of `npm cache clean --force` |
 
 Niet gewijzigd: je gewone Chrome, Python en Node.js zelf, systeeminstellingen, het register.
@@ -22,4 +22,5 @@ Niet gewijzigd: je gewone Chrome, Python en Node.js zelf, systeeminstellingen, h
 
 | Datum | Wat | Terugdraaien | Status |
 |---|---|---|---|
-| | | | |
+| 19 okt 2026 | Reservekopie: map met `index.html` + database-export (JSON) op twee plaatsen: `C:\Projecten\ZoetenInval-werk\lokaal\backup\2026-10-19\` en `C:\Users\leone\OneDrive\ZoetenInval\Backups\2026-10-19\` (door Leo verhuisd vanuit `OneDrive\Backups\ZoetenInval`, die map bestaat niet meer; map `OneDrive\ZoetenIval` door Leo hernoemd naar `ZoetenInval`). Origineel blijft in Downloads | De twee mappen verwijderen in Verkenner | Gedaan |
+| 19 okt 2026 | `start-claude.cmd` in de werkmap herschreven (gitignored): verwijzing naar ander project weg, keuze 1 = nieuw gesprek met startvraag (CLAUDE.md + draaiboek lezen), 2 = `claude --continue` | Bestand verwijderen of terugzetten naar een kale versie die alleen `cd /d "%~dp0"` en `claude` doet | Gedaan |

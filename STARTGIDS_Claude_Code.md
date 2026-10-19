@@ -7,7 +7,7 @@ Voor Leo, op de Windows-laptop. Alle opdrachten zijn voor **PowerShell** (rechts
 | Wat | Waar |
 |---|---|
 | Werkmap (git clone van de repo, niet in OneDrive) | `C:\Projecten\ZoetenInval-werk` |
-| Afgewerkte bestanden en kopie van het pakket | `C:\Users\leone\OneDrive\ZoetenIval` |
+| Afgewerkte bestanden en kopie van het pakket | `C:\Users\leone\OneDrive\ZoetenInval` |
 | Tijdelijke uitpakmap (mag na gebruik weg) | `C:\Projecten\_uitpak` |
 
 Je hebt al: Python 3.12, Node.js LTS, ffmpeg en Claude Code (ffmpeg heb je voor dit project niet nodig).
@@ -41,10 +41,10 @@ Verwacht: `On branch main` en `Your branch is up to date with 'origin/main'`. De
 
 ## 4. Het pakket in de werkmap zetten
 
-Het pakket is `ZoetenIval-werkpakket-v1.0.zip` in `C:\Users\leone\OneDrive\ZoetenIval`.
+Het pakket is `ZoetenIval-werkpakket-v1.0.zip` in `C:\Users\leone\OneDrive\ZoetenInval` (map op 19 okt 2026 hernoemd; de zip staat er niet meer in).
 
 ```
-Expand-Archive -Path "C:\Users\leone\OneDrive\ZoetenIval\ZoetenIval-werkpakket-v1.0.zip" -DestinationPath C:\Projecten\_uitpak -Force
+Expand-Archive -Path "C:\Users\leone\OneDrive\ZoetenInval\ZoetenIval-werkpakket-v1.0.zip" -DestinationPath C:\Projecten\_uitpak -Force
 robocopy C:\Projecten\_uitpak\ZoetenIval-werkpakket-v1.0 C:\Projecten\ZoetenInval-werk /E /XD .git
 ```
 Robocopy geeft exitcodes onder 8 als het gelukt is (dus `0` tot `7` is goed). Daarna:
