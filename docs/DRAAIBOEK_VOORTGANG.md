@@ -44,6 +44,7 @@ Dit document is het geheugen van het project. Nieuwste informatie onderaan (over
 | 12 okt | Echte test op gsm + tablet: bestelling doorsturen, bijbestellen op dezelfde klant, geluid | Geslaagd (door Leo) |
 | 12 okt | Nieuwe versie met kaarten in één rij en lagere tegels | Geslaagd (door Leo, op tablet en gsm) |
 | 19 okt | Rooktest in het uitgepakte werkpakket (Linux, nagebootste Firebase): 19 controles | Geslaagd; niet op Windows zelf getest (zie overdrachtsblok) |
+| 19 okt | Op de Windows-laptop (Claude Code): `node tests\check_syntax.mjs` en `.\.venv\Scripts\python.exe tests\smoke_test.py` | Geslaagd: syntaxis OK, `ALLES OK (19 controles)`. Echte Firebase, beheerderslogin, regels en iOS niet gedekt |
 
 ---
 
