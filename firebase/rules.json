@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "cafe": {
+      "beheerders": { ".read": false, ".write": false },
+      "kaart": {
+        ".read": "auth != null",
+        ".write": "auth != null && root.child('cafe/beheerders/' + auth.uid).val() == true"
+      },
+      "instellingen": {
+        ".read": "auth != null",
+        ".write": "auth != null && root.child('cafe/beheerders/' + auth.uid).val() == true"
+      },
+      "bestellingen": { ".read": "auth != null", ".write": "auth != null" },
+      "rekeningen": { ".read": "auth != null", ".write": "auth != null" },
+      "afgerekend": { ".read": "auth != null", ".write": "auth != null" }
+    }
+  }
+}

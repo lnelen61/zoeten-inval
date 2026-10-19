@@ -1,0 +1,10 @@
+# Alles in lokaal/ blijft op de laptop en gaat NOOIT naar GitHub (de repo is openbaar).
+lokaal/
+.venv/
+__pycache__/
+*.pyc
+*.zip
+node_modules/
+.claude/settings.local.json
+Untitled.docx
+start-claude.cmd

@@ -1,0 +1,2 @@
+# Altijd LF in de bestanden, ook op Windows (voorkomt rommelige diffs).
+* text=auto eol=lf
