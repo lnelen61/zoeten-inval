@@ -14,6 +14,7 @@ Dit document is het geheugen van het project. Nieuwste informatie onderaan (over
 | 12 okt | Toogscherm gebouwd, standaard uit (zie hieronder). Tegels half zo hoog. Instructiezin weg. Dagtotaal en totaal-van-alle-rekeningen weg. |
 | 18 okt | Spraakbediening onderzocht: Stembediening van iOS bestaat niet in het Nederlands; proefpagina gemaakt en daarna geschrapt. Schakelaar Toogscherm verplaatst naar onder in Beheer kaart. |
 | 19 okt | Overdracht naar Claude Code, werkpakket v1.0. |
+| 19 okt | Eerste zitting in Claude Code: tests geslaagd op de laptop, eerste reservekopie, `start-claude.cmd` herschreven. Zoon wordt geen beheerder; Leo blijft alleen. |
 
 ## Beslissingen (en waarom)
 
@@ -32,10 +33,12 @@ Dit document is het geheugen van het project. Nieuwste informatie onderaan (over
 
 ## Nog niet gedaan (open)
 
-- Zoon als tweede beheerder (twee stappen, zie `ARCHITECTUUR.md`).
-- Eigenaarschap Firebase (Google-account) en GitHub-account overdragen of een gedeeld café-account kiezen (stappen staan in het overdrachtsdocument van Leo; nooit de repo naar een ander account verhuizen).
 - Back-ups buiten GitHub: eerste kopie gemaakt op 19 okt 2026 (zie hieronder). Herhalen na elke kaartwijziging of maandelijks.
-- `spraaktest.html` uit de repo halen als ze er nog in staat.
+- Bijkomende features alleen op vraag van Leo.
+
+**Bewust geparkeerd (beslissing Leo, 19 okt 2026):** de zoon wil geen beheerder/eigenaar worden. Leo blijft voorlopig de enige beheerder en eigenaar van Firebase en GitHub. Tweede beheerder en overdracht van eigenaarschap pas opnieuw bekijken als Leo erom vraagt (stappen blijven in `ARCHITECTUUR.md` en het overdrachtsdocument; nooit de repo naar een ander account verhuizen).
+
+**Afgewerkt:** `spraaktest.html` staat niet meer in de repo (nagekeken 19 okt 2026).
 
 ## Reservekopieën
 

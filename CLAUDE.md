@@ -121,11 +121,10 @@ Lokale blik op de pagina zonder Firebase kan met `python -m http.server 8000` in
 
 ## 9. Open punten
 
-- Zoon van Leo als tweede beheerder toevoegen (gebruiker maken in Firebase Authentication én zijn UID zetten onder `cafe/beheerders` met waarde `true`; stappen in `docs/ARCHITECTUUR.md`).
-- Eigenaarschap van het Firebase-project en het GitHub-account later overdragen (stappen in het overdrachtsdocument; **nooit** de repo "transferen" naar een ander account: het adres verandert dan en de tegels breken).
-- Reservekopie: JSON-export van de database (Firebase-console → Data → ⋮ → Export JSON) en een kopie van `index.html` buiten GitHub bewaren.
-- `spraaktest.html` is geschrapt (Nederlands bij Stembediening van iOS niet beschikbaar). Staat het nog in de repo, dan verwijderen (`git rm spraaktest.html`).
+- Reservekopie herhalen na elke kaartwijziging of maandelijks (werkwijze en plaatsen: `docs/DRAAIBOEK_VOORTGANG.md`, stuk "Reservekopieën"; eerste kopie 19 okt 2026).
 - Optioneel/later: bijkomende features op vraag van Leo; wifi/4G moet overal in het café goed zijn, ook op het terras.
+- **Geparkeerd (beslissing Leo, 19 okt 2026):** tweede beheerder en overdracht van eigenaarschap. De zoon wil geen beheerder/eigenaar worden; Leo blijft voorlopig alleen. Niet zelf voorstellen; pas oppakken als Leo erom vraagt (stappen in `docs/ARCHITECTUUR.md`; **nooit** de repo "transferen" naar een ander account: het adres verandert dan en de tegels breken).
+- Afgewerkt: `spraaktest.html` staat niet meer in de repo.
 
 ## 10. Werkafspraken met Leo (altijd volgen)
 
